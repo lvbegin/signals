@@ -5,6 +5,15 @@
 #include <map>
 #include <algorithm>
 
+
+struct Signals::handlerInfo {
+    std::string name;
+    std::function<void()> handler;
+    handlerInfo(std::string name, std::function<void()> handler) : name(name), handler(handler) { }
+    ~handlerInfo() = default;
+};
+
+
 void Signals::addHandler(int sig, std::string name, std::function<void()> handler) {
     std::lock_guard<std::mutex> l(m);
 
