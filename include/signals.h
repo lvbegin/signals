@@ -1,10 +1,12 @@
 #ifndef SIGNALS_H__
+#define SIGNALS_H__
 
 #include <thread>
 #include <mutex>
 #include <vector>
 #include <map>
 #include <functional>
+#include <csignal>
 
 class Signals {
 public:
