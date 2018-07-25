@@ -2,6 +2,7 @@ AC_PREREQ([2.69])
 AC_INIT([signals], [1.0], [laurent.vanbegin76@gmail.com])
 AM_INIT_AUTOMAKE([subdir-objects])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIRS([m4])
 # Checks for programs.
 AC_LANG([C++])
 
@@ -15,4 +16,5 @@ AC_CHECK_HEADER_STDBOOL
 # Checks for library functions.
 AC_CONFIG_FILES([Makefile])
 AC_CHECK_LIB(pthread, pthread_sigmask)
+AX_CHECK_COMPILE_FLAG([-std=c++14])
 AC_OUTPUT

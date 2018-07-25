@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-
+#include <string>
 
 struct Signals::handlerInfo {
     std::string name;
