@@ -1,8 +1,8 @@
 instdir=/usr/local/lib
 
-include_HEADERS=include/signals.h
+include_HEADERS=include/signalHandlerExecutor.h include/signalHandler.h
 inst_LIBRARIES = libsignals.a
-libsignals_a_SOURCES = src/signals.cpp
+libsignals_a_SOURCES = src/signalHandlerExecutor.cpp src/signalHandler.cpp
 libsignals_a_CPPFLAGS = -I$(top_srcdir)/include
 libsignals_a_CXXFLAGS=-O3 -std=c++14
 TESTS = signals_test

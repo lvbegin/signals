@@ -1,4 +1,4 @@
-#include <signals.h>
+#include <signalHandlerExecutor.h>
 #include <csignal>
 #include <thread>
 #include <vector>
@@ -6,29 +6,39 @@
 #include <algorithm>
 #include <string>
 
-struct Signals::handlerInfo {
-    std::string name;
+class SignalHandlerExecutor::HandlerInfo {
+public:
+    int id;
     std::function<void()> handler;
-    handlerInfo(std::string name, std::function<void()> handler) : name(name), handler(handler) { }
-    ~handlerInfo() = default;
+    ~HandlerInfo() = default;
+    static HandlerInfo *create(std::function<void()> handler) {
+        return new HandlerInfo(ids++, handler);
+    }
+
+private:
+    static int ids;
+    HandlerInfo(int id, std::function<void()> handler) : id(id), handler(handler) { }
 };
 
+int  SignalHandlerExecutor::HandlerInfo::ids = 0;
 
-void Signals::addHandler(int sig, std::string name, std::function<void()> handler) {
+int SignalHandlerExecutor::addHandler(int sig, std::function<void()> handler) {
     std::lock_guard<std::mutex> l(m);
 
     if (!isCatchable(sig))
         throw std::runtime_error("Error: uncatchable signal");
-    all_handlers[sig].push_back(new handlerInfo(std::move(name), handler)); 
+    auto handlerInfo = HandlerInfo::create(handler);
+    all_handlers[sig].push_back(handlerInfo); 
+    return handlerInfo->id;
 }
 
-void Signals::removeHandler(int sig, std::string name) {
+void SignalHandlerExecutor::removeHandler(int sig, int handlerId) {
     std::lock_guard<std::mutex> l(m);
 
     if (!isCatchable(sig))
         throw std::runtime_error("Error: uncatchable signal");
     auto handlers = all_handlers[sig];
-    auto it = std::find_if(handlers.begin(), handlers.end(), [&name](auto it) { return name == it->name;});
+    auto it = std::find_if(handlers.begin(), handlers.end(), [handlerId](auto it) { return handlerId == it->id;});
     if (it == handlers.end())
         throw std::out_of_range("handler does not exist");
     delete *it;
@@ -36,13 +46,13 @@ void Signals::removeHandler(int sig, std::string name) {
     all_handlers[sig] = std::move(handlers);
 }
 
-bool Signals::isCatchable(int sig) {
+bool SignalHandlerExecutor::isCatchable(int sig) {
     auto b = uncatchableSignals.begin();
     auto e = uncatchableSignals.end();
     return e == std::find(b, e, sig);
 }
 
-void Signals::start() {
+void SignalHandlerExecutor::start() {
     sigset_t set;
     sigfillset(&set);
     pthread_sigmask(SIG_BLOCK, &set, nullptr);
@@ -62,7 +72,7 @@ void Signals::start() {
     }).detach();
 }
 
-std::mutex Signals::m;
-const std::vector<int> Signals::uncatchableSignals = { SIGSTOP, SIGKILL, }; 
-std::map<int, std::vector<Signals::handlerInfo *>> Signals::all_handlers;
-bool Signals::dummy = (Signals::start(), 0);
+std::mutex SignalHandlerExecutor::m;
+const std::vector<int> SignalHandlerExecutor::uncatchableSignals = { SIGSTOP, SIGKILL, }; 
+std::map<int, std::vector<SignalHandlerExecutor::HandlerInfo *>> SignalHandlerExecutor::all_handlers;
+bool SignalHandlerExecutor::dummy = (SignalHandlerExecutor::start(), 0);
