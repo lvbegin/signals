@@ -6,6 +6,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_LANG([C++])
 
 # Checks for libraries.
+AX_CHECK_ENABLE_DEBUG([no])
 AC_PROG_RANLIB
 AM_INIT_AUTOMAKE()
 # Checks for header files.
