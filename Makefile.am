@@ -1,6 +1,7 @@
 instdir=/usr/local/lib
 
-include_HEADERS=include/signalHandlerExecutor.h include/signalHandler.h
+include_HEADERS=include/signalHandler.h
+noinst_HEADERS=include/signalHandlerExecutor.h 
 inst_LIBRARIES = libsignals.a
 libsignals_a_SOURCES = src/signalHandlerExecutor.cpp src/signalHandler.cpp
 libsignals_a_CPPFLAGS = -I$(top_srcdir)/include
