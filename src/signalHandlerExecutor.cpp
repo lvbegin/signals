@@ -34,6 +34,7 @@
 #include <map>
 #include <algorithm>
 #include <string>
+#include <iostream>
 
 class SignalHandlerExecutor::HandlerInfo {
 public:
@@ -90,6 +91,10 @@ void SignalHandlerExecutor::start() {
         while (true)  {
             int sig;
             auto s = sigwait(&set, &sig);
+            if (0 != s) {
+                std::cerr << "sigwait failed with error " << s << std::endl;  
+                exit(-1);
+            }
             {
                 std::lock_guard<std::mutex> l(m);
                 auto handlers = all_handlers[sig];
