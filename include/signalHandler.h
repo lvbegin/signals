@@ -27,8 +27,8 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SIGNAL_HANDLER_H__
-#define SIGNAL_HANDLER_H__
+#ifndef SIGNAL_HANDLER_H_
+#define SIGNAL_HANDLER_H_
 
 #include <functional>
 

@@ -27,8 +27,8 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef HANDLER_INFO_H__
-#define HANDLER_INFO_H__
+#ifndef HANDLER_INFO_H_
+#define HANDLER_INFO_H_
 
 #ifdef __cplusplus
 extern "C" {
