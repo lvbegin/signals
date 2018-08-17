@@ -8,6 +8,7 @@ AC_LANG([C++])
 # Checks for libraries.
 AX_CHECK_ENABLE_DEBUG([no])
 AC_PROG_RANLIB
+AC_PROG_CC
 AM_INIT_AUTOMAKE()
 # Checks for header files.
 # Checks for typedefs, structures, and compiler characteristics.
