@@ -49,7 +49,7 @@ private:
 
     static std::mutex  m;
     static const std::vector<int> uncatchableSignals;
-    static std::map<int, std::vector<HandlerInfo *>> all_handlers;
+    static std::map<int, std::vector<HandlerInfo *> > all_handlers;
     static bool dummy;
 };
 
