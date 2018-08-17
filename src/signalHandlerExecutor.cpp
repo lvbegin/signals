@@ -107,6 +107,6 @@ void SignalHandlerExecutor::start() {
 }
 
 std::mutex SignalHandlerExecutor::m;
-const std::vector<int> SignalHandlerExecutor::uncatchableSignals = { SIGSTOP, SIGKILL, }; 
+const std::vector<int> SignalHandlerExecutor::uncatchableSignals { SIGSTOP, SIGKILL, }; 
 std::map<int, std::vector<SignalHandlerExecutor::HandlerInfo *>> SignalHandlerExecutor::all_handlers;
 bool SignalHandlerExecutor::dummy = (SignalHandlerExecutor::start(), 0);
