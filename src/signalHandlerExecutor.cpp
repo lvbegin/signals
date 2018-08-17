@@ -67,7 +67,7 @@ void SignalHandlerExecutor::removeHandler(int sig, int handlerId) {
     if (!isCatchable(sig))
         throw std::runtime_error("Error: uncatchable signal");
     auto handlers = all_handlers[sig];
-    auto it = std::find_if(handlers.begin(), handlers.end(), [handlerId](auto it) { return handlerId == it->id;});
+    auto it = std::find_if(handlers.begin(), handlers.end(), [handlerId](auto elem) { return handlerId == elem->id;});
     if (it == handlers.end())
         throw std::out_of_range("handler does not exist");
     delete *it;
