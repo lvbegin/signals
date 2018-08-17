@@ -34,7 +34,7 @@
 extern "C" {
 #endif
 
-int handler_info_create(int sig, void (*handler)());
+int handler_info_create(int sig, void (*handler)(void));
 void handler_info_delete(int sig, int id);
 
 #ifdef __cplusplus

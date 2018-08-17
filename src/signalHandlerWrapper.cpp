@@ -34,7 +34,7 @@
 
 extern "C" {
 
-int handler_info_create(int sig, void (*handler)()) {
+int handler_info_create(int sig, void (*handler)(void)) {
     return SignalHandlerExecutor::addHandler(sig, handler);
 }
 
