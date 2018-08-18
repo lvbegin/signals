@@ -28,18 +28,28 @@
  */
 
 #include <signal_handler.h>
-#include <stdlib.h>
 #include <signalHandlerExecutor.h>
 
+#include <iostream>
 
 extern "C" {
 
 int handler_info_create(int sig, void (*handler)(void)) {
-    return SignalHandlerExecutor::addHandler(sig, handler);
+    try {
+        return SignalHandlerExecutor::addHandler(sig, handler);
+    } catch (std::exception &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+        exit(-1);
+    }
 }
 
 void handler_info_delete(int sig, int handler_id) {
-    SignalHandlerExecutor::removeHandler(sig, handler_id);
+    try {
+        SignalHandlerExecutor::removeHandler(sig, handler_id);
+    } catch (std::exception &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+        exit(-1);
+    }
 }
 
 }
