@@ -16,5 +16,5 @@ signals_test_CPPFLAGS = -I$(top_srcdir)/include
 
 signals_c_wrapper_test_SOURCES = test/test.c
 signals_c_wrapper_test_LDFLAGS = -L$(top_srcdir) 
-signals_c_wrapper_test_LDADD =  -lsignals  
+signals_c_wrapper_test_LDADD =  -lsignals  $(CXXLIB) 
 signals_c_wrapper_test_CPPFLAGS = -I$(top_srcdir)/include

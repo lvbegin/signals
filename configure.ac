@@ -17,5 +17,6 @@ AC_CHECK_HEADER_STDBOOL
 # Checks for library functions.
 AC_CONFIG_FILES([Makefile])
 AC_CHECK_LIB(pthread, pthread_sigmask)
+AX_CHECK_LINK_FLAG(-lstdc++, AC_SUBST([CXXLIB], [-lstdc++]), AC_SUBST([CXXLIB], []))
 AX_CXX_COMPILE_STDCXX_14([noext],[mandatory])
 AC_OUTPUT
