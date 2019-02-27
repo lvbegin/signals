@@ -18,7 +18,7 @@ static void handler2() {
 
 int main()
 {
-    handler_info_create(SIGINT, handler1); 
+    const int sigint_handler_id = handler_info_create(SIGINT, handler1); 
 
     printf("Check handler is called.\n");
     kill(getpid(), SIGINT);
@@ -53,5 +53,6 @@ int main()
 
     printf("Check that signal with no registered handler can be received\n");
     kill(getpid(), SIGTERM);
+    handler_info_delete(SIGINT, sigint_handler_id); 
     return EXIT_SUCCESS;
 }
